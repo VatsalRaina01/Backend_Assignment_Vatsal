@@ -53,6 +53,25 @@ async def lifespan(app: FastAPI):
     logger.info("Initializing database tables...")
     init_db()
     logger.info("Database initialized.")
+
+    # Auto-seed if database is empty (e.g. fresh Render deploy)
+    from app.database import SessionLocal
+    from app.models.user import User
+    db = SessionLocal()
+    try:
+        user_count = db.query(User).count()
+        if user_count == 0:
+            logger.info("Empty database detected — running seed...")
+            db.close()
+            from app.seed import seed_database
+            seed_database()
+            logger.info("Seed complete.")
+        else:
+            db.close()
+    except Exception as e:
+        logger.warning("Auto-seed skipped: %s", e)
+        db.close()
+
     logger.info(
         "%s v%s is running! Docs at http://localhost:8000/docs",
         settings.APP_NAME,
