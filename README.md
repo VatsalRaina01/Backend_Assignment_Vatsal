@@ -38,8 +38,8 @@ A production-grade backend for a finance dashboard system built with **FastAPI**
 ### 1. Clone & Setup
 
 ```bash
-git clone https://github.com/VatsalRaina01/Backend_Assignment_Vastal
-cd Backend_Assignment_Vastal
+git clone https://github.com/VatsalRaina01/Backend_Assignment_Vatsal
+cd Backend_Assignment_Vatsal
 
 # Create virtual environment
 python -m venv venv
